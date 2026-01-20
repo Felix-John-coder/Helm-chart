@@ -50,11 +50,17 @@ ingress:
     nginx.ingress.kubernetes.io/limit-burst-multiplier: "2"
   tls: 
     - hosts:
-        - 34.194.105.37.nip.io
+        - 44.198.242.21.nip.io
+        - 3.214.63.35.nip.io
       secretName: webapp-tls 
 
   hosts:
-    - host: 34.194.105.37.nip.io
+    - host: 3.214.63.35.nip.io
+      paths:
+        - path: /
+          pathType: Prefix
+  host:
+    - host: 44.198.242.21.nip.io
       paths:
         - path: /
           pathType: Prefix
@@ -71,15 +77,18 @@ livenessProbe:
   httpGet:
     path: /
     port: http
+  initialDelaySeconds: 20
+  periodSeconds: 10
 readinessProbe:
   httpGet:
     path: /
     port: http
+  initialDelaySeconds: 20
+  periodSeconds: 10
 
 serviceAccount: 
-  Name: serviceaccount
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::464356371111:role/felix-eksctl
+    eks.amazonaws.com/role-arn: arn:aws:iam::464356371111:role/eksctl
 
 clusterissuer: 
   name: nginx
